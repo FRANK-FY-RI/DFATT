@@ -26,9 +26,7 @@ int main() {
 
     for(int curr_state = 1; curr_state<no_of_states; curr_state++) {
         for(size_t ind = 0; ind<symbols.size(); ind++) {
-            //std::cout<<curr_state<<" "<<ind<<" ";
             dfa[curr_state][ind] = nextstate(curr_state, symbols[ind]);
-            //std::cout<<dfa[curr_state][ind]<<'\n'; 
         }
     }
 
