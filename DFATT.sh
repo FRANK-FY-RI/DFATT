@@ -5,7 +5,7 @@ fi
 
 gcc table_lexer.c -o table_lexer
 status=$?
-if [[ status == 0 ]]; then
+if [[ $status != 0 ]]; then
     echo "Compilation failed"
     exit 1
 fi
@@ -19,8 +19,9 @@ echo "using flex_int16_t = int16_t;" >> dfa_table.hpp
 
 g++ main.cpp -o main
 status=$?
-if [[ status == 0 ]]; then
+if [[ $status != 0 ]]; then
     echo "Compilation failed"
+    rm dfa_table.hpp
     exit 1
 fi
 
