@@ -22,6 +22,8 @@ status=$?
 if [[ $status != 0 ]]; then
     echo "Compilation failed"
     rm dfa_table.hpp
+    rm table_lexer
+    rm main
     exit 1
 fi
 
