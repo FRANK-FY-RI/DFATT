@@ -1,4 +1,5 @@
 #include <vector>
+#include <fstream>
 #include <iostream>
 #include <cstdint>
 #include "dfa_table.hpp"
@@ -30,15 +31,28 @@ int main() {
         }
     }
 
+    std::ofstream fout("tt.txt");
+    if(!fout) {
+        std::cout<<"Unable to open/create file tt.txt\n";
+        return 1;
+    }
     std::cout<<"State\t"; 
-    for(const char a:symbols) std::cout<<a<<'\t';
+    fout<<no_of_states-1<<'\n'<<symbols.size()<<'\n';
+    for(const char a:symbols) {
+        fout<<a<<'\t';
+        std::cout<<a<<'\t';
+    }
+    fout<<'\n';
     std::cout<<'\n';
 
     for(int i = 1; i<no_of_states; i++) {
+        fout<<i<<'\t';
         std::cout<<i<<'\t';
         for(size_t j = 0; j<symbols.size(); j++) {
+            fout<<dfa[i][j]<<'\t';
             std::cout<<dfa[i][j]<<'\t';
         }
+        fout<<'\n';
         std::cout<<'\n';
     }
      
