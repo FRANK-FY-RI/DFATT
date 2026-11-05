@@ -1,9 +1,9 @@
 #include <iostream>
+#include <string>
 #include <vector>
 #include <cstdint>
 
 #include "optimizations.hpp"
-
 
 int nextstate(int curr_state, uint8_t input) {
     uint8_t yy_c = yy_ec[input];
@@ -22,38 +22,37 @@ int main(int argc, char* argv[]) {
         optimization = 0;
     }
     else if(argc == 2) {
-        string flag = argv[1];
+        std::string flag = argv[1];
 
         if(flag == "-O1") optimization = 1;
         else if(flag == "-O2") optimization = 2;
         else {
-            cerr << "Invalid flag\n";
+            std::cerr << "Invalid flag\n";
             return 1;
         }
     }
     else {
-        cerr << "Too many arguments\n";
+        std::cerr << "Too many arguments\n";
         return 1;
     }
-
 
     std::vector<int> symbols;
     for(int i = 0; i<256; i++) {
         if(yy_ec[i] > 1) symbols.emplace_back(i);
     }
 
-    const int no_of_states = get_no_of_states(optimization) ;
+    const int no_of_states = get_no_of_states(optimization);
 
     std::vector<std::vector<int>> dfa(no_of_states+1, std::vector<int>(symbols.size()));
 
-    for(int curr_state = 1; curr_state<no_of_states; curr_state++) {
-        for(size_t ind = 0; ind<symbols.size(); ind++) {
+    for(int curr_state = 1; curr_state < no_of_states; curr_state++) {
+        for(size_t ind = 0; ind < symbols.size(); ind++) {
             dfa[curr_state][ind] = nextstate(curr_state, symbols[ind]);
         }
     }
 
     std::cout<<"State\t";
-    for(const char a:symbols) std::cout<<a<<'\t';
+    for(const char a : symbols) std::cout<<a<<'\t';
     std::cout<<'\n';
 
     for(int i = 1; i<no_of_states; i++) {
@@ -66,4 +65,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
