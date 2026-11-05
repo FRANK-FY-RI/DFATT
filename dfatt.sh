@@ -31,6 +31,8 @@ if [[ $status != 0 ]]; then
     exit 1
 fi
 
+trap "rm table_lexer; rm dfa_table.hpp; rm main" EXIT
+
 if [[ $# == 1 ]]; then
     ./main
 fi
@@ -39,8 +41,6 @@ if [[ $# == 2 ]]; then
     ./main $2
 fi
 
-trap "rm table_lexer; rm dfa_table.hpp; rm main" EXIT
-./main
 trap "rm table_lexer; rm dfa_table.hpp; rm main; rm tt.txt" EXIT
 
 # save the plot of the DFA as an Image
