@@ -1,3 +1,7 @@
+#! /bin/bash
+
+set -e
+
 if [[ $# != 1 ]]; then
     echo "Usage: $0 <lex.yy.c>"
     exit 1
@@ -28,5 +32,11 @@ if [[ $status != 0 ]]; then
 fi
 
 ./main
+
+# save the plot of the DFA as an Image
+python3 plot.py < tt.txt
+
+echo "The Automaton generated for the given Regular Expression is saved as graph.png"
+rm tt.txt
 
 rm dfa_table.hpp
