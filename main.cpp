@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
-#include <vector>
+
 #include <fstream>
->>>>>>> ebec48a600bd924a5eb99bc349fa176648e897fe
 #include <iostream>
 #include <string>
 #include <vector>
@@ -29,8 +26,11 @@ int main(int argc, char* argv[]) {
     else if(argc == 2) {
         std::string flag = argv[1];
 
-        if(flag == "-O1") optimization = 1;
+        if(flag == "-O1") {
+            optimization = 1;
+        }
         else if(flag == "-O2") optimization = 2;
+        else if(flag == "-O0") optimization = 0;
         else {
             std::cerr << "Invalid flag\n";
             return 1;
