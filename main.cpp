@@ -1,11 +1,12 @@
-#include <vector>
 #include <iostream>
+#include <vector>
 #include <cstdint>
-#include "dfa_table.hpp"
+
+#include "optimizations.hpp"
 
 
 int nextstate(int curr_state, uint8_t input) {
-    uint8_t yy_c = yy_ec[input]; 
+    uint8_t yy_c = yy_ec[input];
     while(yy_chk[yy_base[curr_state] + yy_c] != curr_state) {
         curr_state = yy_def[curr_state];
         if(curr_state >= 10) yy_c = yy_meta[yy_c];
@@ -13,14 +14,35 @@ int nextstate(int curr_state, uint8_t input) {
     return yy_nxt[yy_base[curr_state] + yy_c];
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+
+    int optimization = 0;
+
+    if(argc == 1) {
+        optimization = 0;
+    }
+    else if(argc == 2) {
+        string flag = argv[1];
+
+        if(flag == "-O1") optimization = 1;
+        else if(flag == "-O2") optimization = 2;
+        else {
+            cerr << "Invalid flag\n";
+            return 1;
+        }
+    }
+    else {
+        cerr << "Too many arguments\n";
+        return 1;
+    }
+
 
     std::vector<int> symbols;
     for(int i = 0; i<256; i++) {
         if(yy_ec[i] > 1) symbols.emplace_back(i);
     }
 
-    const int no_of_states = sizeof(yy_base)/sizeof(int16_t);
+    const int no_of_states = get_no_of_states(optimization) ;
 
     std::vector<std::vector<int>> dfa(no_of_states+1, std::vector<int>(symbols.size()));
 
@@ -30,7 +52,7 @@ int main() {
         }
     }
 
-    std::cout<<"State\t"; 
+    std::cout<<"State\t";
     for(const char a:symbols) std::cout<<a<<'\t';
     std::cout<<'\n';
 
@@ -41,7 +63,7 @@ int main() {
         }
         std::cout<<'\n';
     }
-     
+
     return 0;
 }
 
