@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+#include <vector>
+#include <fstream>
+>>>>>>> ebec48a600bd924a5eb99bc349fa176648e897fe
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,7 +14,7 @@ int nextstate(int curr_state, uint8_t input) {
     uint8_t yy_c = yy_ec[input];
     while(yy_chk[yy_base[curr_state] + yy_c] != curr_state) {
         curr_state = yy_def[curr_state];
-        if(curr_state >= 10) yy_c = yy_meta[yy_c];
+        if(curr_state >= yy_def[1]) yy_c = yy_meta[yy_c];
     }
     return yy_nxt[yy_base[curr_state] + yy_c];
 }
@@ -51,15 +56,28 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    std::ofstream fout("tt.txt");
+    if(!fout) {
+        std::cout<<"Unable to open/create file tt.txt\n";
+        return 1;
+    }
     std::cout<<"State\t";
-    for(const char a : symbols) std::cout<<a<<'\t';
+    fout<<no_of_states-1<<'\n'<<symbols.size()<<'\n';
+    for(const char a:symbols) {
+        fout<<a<<'\t';
+        std::cout<<a<<'\t';
+    }
+    fout<<'\n';
     std::cout<<'\n';
 
     for(int i = 1; i<no_of_states; i++) {
+        fout<<i<<'\t';
         std::cout<<i<<'\t';
         for(size_t j = 0; j<symbols.size(); j++) {
+            fout<<dfa[i][j]<<'\t';
             std::cout<<dfa[i][j]<<'\t';
         }
+        fout<<'\n';
         std::cout<<'\n';
     }
 
