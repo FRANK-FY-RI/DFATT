@@ -2,7 +2,7 @@
 
 set -e
 
-if [[ $# != 1 ]]; then
+if [[ $# > 2 ]]; then
     echo "Usage: $0 <lex.yy.c>"
     exit 1
 fi
@@ -23,6 +23,7 @@ echo "using flex_int16_t = int16_t;" >> dfa_table.hpp
 ./table_lexer <$1 >>dfa_table.hpp
 
 g++ main.cpp -o main
+
 status=$?
 if [[ $status != 0 ]]; then
     echo "Compilation failed"
@@ -32,7 +33,13 @@ if [[ $status != 0 ]]; then
     exit 1
 fi
 
-./main
+if [[ $# == 1 ]]; then
+    ./main
+fi
+
+if [[ $# == 2 ]]; then
+    ./main $2
+fi
 
 # save the plot of the DFA as an Image
 python3 plot.py < tt.txt
