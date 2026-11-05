@@ -12,6 +12,7 @@ fi
 
 # $1 is the lex file (.l) for which a Transition Table is to be made
 touch dfa_table.hpp
+echo "#pragma once" >> dfa_table.hpp
 echo "#include <cstdint>" >> dfa_table.hpp
 echo "using YY_CHAR = unsigned int;" >> dfa_table.hpp
 echo "using flex_int16_t = int16_t;" >> dfa_table.hpp
