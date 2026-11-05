@@ -9,7 +9,7 @@ int nextstate(int curr_state, uint8_t input) {
     uint8_t yy_c = yy_ec[input]; 
     while(yy_chk[yy_base[curr_state] + yy_c] != curr_state) {
         curr_state = yy_def[curr_state];
-        if(curr_state >= 10) yy_c = yy_meta[yy_c];
+        if(curr_state >= yy_def[1]) yy_c = yy_meta[yy_c];
     }
     return yy_nxt[yy_base[curr_state] + yy_c];
 }
