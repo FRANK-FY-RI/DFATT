@@ -2,7 +2,7 @@
 
 set -e
 
-if [[ $# != 1 ]]; then
+if [[ $# > 2 ]]; then
     echo "Usage: $0 <lex.yy.c>"
     exit 1
 fi
@@ -17,6 +17,7 @@ trap "rm table_lexer" EXIT
 
 # $1 is the lex file (.l) for which a Transition Table is to be made
 touch dfa_table.hpp
+echo "#pragma once" >> dfa_table.hpp
 trap "rm table_lexer; rm dfa_table.hpp" EXIT
 echo "#include <cstdint>" >> dfa_table.hpp
 echo "using YY_CHAR = unsigned int;" >> dfa_table.hpp
@@ -29,6 +30,15 @@ if [[ $status != 0 ]]; then
     echo "Compilation failed"
     exit 1
 fi
+
+if [[ $# == 1 ]]; then
+    ./main
+fi
+
+if [[ $# == 2 ]]; then
+    ./main $2
+fi
+
 trap "rm table_lexer; rm dfa_table.hpp; rm main" EXIT
 ./main
 trap "rm table_lexer; rm dfa_table.hpp; rm main; rm tt.txt" EXIT
