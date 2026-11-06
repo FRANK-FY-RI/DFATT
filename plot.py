@@ -23,7 +23,7 @@ G = nx.DiGraph()
 # Add edges with symbols as labels instead of weights
 for u, v, symbol in edges:
     if G.has_edge(u, v):
-        G[u][v]["label"] += "/" + symbol
+        G[u][v]["label"] += "," + symbol
     else:
         G.add_edge(u, v, label=symbol)
 
