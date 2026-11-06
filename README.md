@@ -105,9 +105,9 @@ deactivate
 
 | Flag | Behavior |
 | --- | --- |
-| `-O0` | Uses the raw number of states from Flex's `yy_base` array. This is also the default when no flag is supplied. |
-| `-O1` | Uses the reduced state count derived from `yy_def[1]`, excluding the external ghost-state range. |
-| `-O2` | Currently follows the same reduced-state path as `-O1`. |
+| -O0 | Uses the raw number of states from Flex's `yy_base` array. This is also the default when no flag is supplied. |
+| -O1 | Uses the reduced state count derived from `yy_def[1]`, excluding the external ghost-state range. |
+| -O2 | Currently follows the same reduced-state path as `-O1`. |
 
 > **Note:** `-O1` and `-O2` are accepted by the command-line interface, but the current implementation maps both to the same state-count selection. They should not be interpreted as separate optimization passes.
 
