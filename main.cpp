@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <array>
 
 #include "optimizations.hpp"
 
@@ -16,7 +17,19 @@ int nextstate(int curr_state, uint8_t input) {
     return yy_nxt[yy_base[curr_state] + yy_c];
 }
 
+std::array<std::string, 256> load_symbol_names() {
+    std::array<std::string, 256> names;
+    std::ifstream file("symbol_names.tsv");
+    int code;
+    std::string name;
+    while (file >> code >> name) {
+        if (code >= 0 && code < static_cast<int>(names.size())) names[code] = name;
+    }
+    return names;
+}
+
 int main(int argc, char* argv[]) {
+    const std::array<std::string, 256> symbol_names = load_symbol_names();
 
     int optimization = 0;
 
@@ -63,9 +76,9 @@ int main(int argc, char* argv[]) {
     }
     std::cout<<"State\t";
     fout<<no_of_states-1<<'\n'<<symbols.size()<<'\n';
-    for(const char a:symbols) {
+    for(const int a:symbols) {
         fout<<a<<'\t';
-        std::cout<<a<<'\t';
+        std::cout<<symbol_names[a]<<'\t';
     }
     fout<<'\n';
     std::cout<<'\n';

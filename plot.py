@@ -4,7 +4,13 @@ import matplotlib.pyplot as plt
 N = int(input())
 M = int(input())
 
-Symbols = input().split()
+Symbols = [int(value) for value in input().split()]
+
+with open("symbol_names.tsv", encoding="ascii") as symbol_file:
+    SYMBOL_NAMES = [None] * 256
+    for line in symbol_file:
+        code, name = line.rstrip("\n").split("\t")
+        SYMBOL_NAMES[int(code)] = name
 
 edges = []
 
@@ -13,7 +19,7 @@ for i in range(N):
     u = temp[0]
 
     for j in range(M):
-        edges.append((u, temp[j+1], Symbols[j]))
+        edges.append((u, temp[j+1], SYMBOL_NAMES[Symbols[j]]))
 
 
 #print(edges)
