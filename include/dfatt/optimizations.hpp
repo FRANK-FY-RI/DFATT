@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dfa_table.hpp"
+#include <dfa_table.hpp>
 
 int get_no_of_states(int optimization){
     int raw_no_of_states = sizeof(yy_base)/sizeof(int16_t);

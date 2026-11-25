@@ -6,7 +6,7 @@ M = int(input())
 
 Symbols = [int(value) for value in input().split()]
 
-with open("symbol_names.tsv", encoding="ascii") as symbol_file:
+with open("data/symbol_names.tsv", encoding="ascii") as symbol_file:
     SYMBOL_NAMES = [None] * 256
     for line in symbol_file:
         code, name = line.rstrip("\n").split("\t")
@@ -60,4 +60,4 @@ nx.draw_networkx_edge_labels(
 )
 
 #plt.show()
-plt.savefig("graph.png", dpi=300, bbox_inches="tight")
+plt.savefig("build/graph.png", dpi=300, bbox_inches="tight")

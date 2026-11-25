@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <array>
 
-#include "optimizations.hpp"
+#include "dfatt/optimizations.hpp"
 
 int nextstate(int curr_state, uint8_t input) {
     uint8_t yy_c = yy_ec[input];
@@ -19,7 +19,7 @@ int nextstate(int curr_state, uint8_t input) {
 
 std::array<std::string, 256> load_symbol_names() {
     std::array<std::string, 256> names;
-    std::ifstream file("symbol_names.tsv");
+    std::ifstream file("data/symbol_names.tsv");
     int code;
     std::string name;
     while (file >> code >> name) {
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    std::ofstream fout("tt.txt");
+    std::ofstream fout("build/tt.txt");
     if(!fout) {
         std::cout<<"Unable to open/create file tt.txt\n";
         return 1;
