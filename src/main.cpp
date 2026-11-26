@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
         }
         else if(flag == "-O2") optimization = 2;
         else if(flag == "-O0") optimization = 0;
+        else if(flag == "-O3") optimization = 3;
         else {
             std::cerr << "Invalid flag\n";
             return 1;
@@ -52,7 +53,10 @@ int main(int argc, char* argv[]) {
 
     int no_of_states = get_no_of_states(optimization);
 
-    std::vector<std::vector<int>> dfa = getDFA(no_of_states,symbols,optimization);
+    auto result = getDFA(no_of_states,symbols,optimization);
+
+    std::vector<std::vector<int>> dfa = result.first;
+    std::vector<int> finals = result.second;
 
     std::ofstream fout("build/tt.txt");
     if(!fout) {
@@ -78,6 +82,13 @@ int main(int argc, char* argv[]) {
         fout<<'\n';
         std::cout<<'\n';
     }
+
+    fout<<1<<"\n";
+    for(auto&i:finals)
+    {
+        fout<<i<<" ";
+    }
+    fout<<"\n";
 
     return 0;
 }
