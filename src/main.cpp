@@ -8,15 +8,6 @@
 
 #include "dfatt/optimizations.hpp"
 
-int nextstate(int curr_state, uint8_t input) {
-    uint8_t yy_c = yy_ec[input];
-    while(yy_chk[yy_base[curr_state] + yy_c] != curr_state) {
-        curr_state = yy_def[curr_state];
-        if(curr_state >= yy_def[1]) yy_c = yy_meta[yy_c];
-    }
-    return yy_nxt[yy_base[curr_state] + yy_c];
-}
-
 std::array<std::string, 256> load_symbol_names() {
     std::array<std::string, 256> names;
     std::ifstream file("data/symbol_names.tsv");
@@ -59,15 +50,9 @@ int main(int argc, char* argv[]) {
         if(yy_ec[i] > 1) symbols.emplace_back(i);
     }
 
-    const int no_of_states = get_no_of_states(optimization);
+    int no_of_states = get_no_of_states(optimization);
 
-    std::vector<std::vector<int>> dfa(no_of_states+1, std::vector<int>(symbols.size()));
-
-    for(int curr_state = 1; curr_state < no_of_states; curr_state++) {
-        for(size_t ind = 0; ind < symbols.size(); ind++) {
-            dfa[curr_state][ind] = nextstate(curr_state, symbols[ind]);
-        }
-    }
+    std::vector<std::vector<int>> dfa = getDFA(no_of_states,symbols,optimization);
 
     std::ofstream fout("build/tt.txt");
     if(!fout) {
